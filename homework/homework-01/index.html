@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Homework 01</title>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+
+<style>
+	body { padding-bottom: 100px; }
+	hr { border: 1px solid rgba(0,0,0,0.25); border-bottom-color: rgba(255,255,255,0.25); }
+	.square { border-radius: 8px; margin: 10px 0; background: #eee; }
+
+	body.th0 { color: #3c763d; background: #dff0d8; }
+	body.th0 .square { color: #fff; background: #3c763d; }
+
+	body.th1 { color: #31708f; background: #d9edf7; }
+	body.th1 .square { color: #fff; background: #31708f; }
+
+	body.th2 { color: #8a6d3b; background: #fcf8e3; }
+	body.th2 .square { color: #fff; background: #8a6d3b; }
+
+	body.th3 { color: #a94442; background: #f2dede; }
+	body.th3 .square { color: #fff; background: #a94442; }
+
+	body.th4 { color: #eeeeee; background: #aaaaaa; }
+	body.th4 .square { color: #fff; background: #666666; }
+
+</style>
+
+
+<body
+	ng-app="Homework01" 
+	ng-controller="ThemeCtrl as ctrl" 
+	ng-class="ctrl.selectedTheme"
+>
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-xs-4">
+				<h4>Select a theme</h4>
+				
+				<div class="radio" ng-repeat="theme in ctrl.themes">
+					<label>
+						<input type="radio" name="theme" ng-model="ctrl.selectedTheme" ng-value="theme.class">
+						<span ng-bind="theme.name"></span>
+					</label>
+				</div>
+			</div>
+			<div class="col-xs-2 square">
+				<h2>Hello!</h2>
+			</div>
+		</div>
+
+		<hr>
+
+		<div class="row">
+			<div class="col-xs-6">
+
+				<h4>My files</h4>
+				
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" ng-model="ctrl.expanded">
+						Expand all
+					</label>
+				</div>
+				
+
+				<ul class="file-tree">
+					<li class="folder" ng-repeat="d in ctrl.fileStructure">
+						<span>
+							<i class="glyphicon glyphicon-folder-close"></i>
+							<strong ng-bind="d.folder"></strong>
+						</span>
+						<ul ng-show="ctrl.expanded">
+							<li class="file" ng-repeat="f in d.files">
+								<span ng-bind="f"></span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+
+
+			</div>
+		</div>
+
+		
+		
+
+	</div>
+
+
+
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>
+
+
+<!-- 
+
+
+
+ -->
