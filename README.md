@@ -76,12 +76,12 @@ Only updates an `ng-bind` when the apps loads. In other words, removes the **wat
 <span ng-bind="::ctrl.value"></span>
 ````
 
-#Utility method
+#Utility methods
 
 - `angular.copy()` Clones an object, controller, etc.
 - `angular.equals(obj1, obj2)` Returns *true* if all the properties of the two objects are the same. In plain js, two objects are not the same even if their props are the same.
 - `angular.forEach(obj, function(value, key))` You cannot `break` out of it.
 - `angular.extend(overridenObj, obj1, objN)` Merges objects, same as jQuery extend. Doesn't do a deep copy. Precedence to parameters on right.
 
-More info: [Angular function conponents](https://docs.angularjs.org/api/ng/function)
+More info: [Angular function components](https://docs.angularjs.org/api/ng/function)
 
