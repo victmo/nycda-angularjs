@@ -1,4 +1,4 @@
-var myModule = angular.module('Exercisek01', []);  // params: nameOfModule, [dependencies]
+var myModule = angular.module('Exercise01', []);  // params: nameOfModule, [dependencies]
 
 myModule.controller('ContactsCtrl', function(){  // params: nameOfController, function <the ctrl code>
 	var self = this;
