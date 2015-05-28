@@ -11,9 +11,8 @@ myModule.controller('EditCtrl', function(){  // params: nameOfController, functi
 		email:'victmo@gmail.com'
 	};
 
-	self.temp = angular.copy(self.contact);
-
 	self.edit = function(){
+		self.temp = angular.copy(self.contact);
 		self.editing = true;
 	};
 
