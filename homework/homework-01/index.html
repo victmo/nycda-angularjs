@@ -61,8 +61,8 @@
 				<h4>My files</h4>
 				
 				<div class="checkbox">
-					<label>
-						<input type="checkbox" ng-model="ctrl.expanded">
+					<label ng-click="ctrl.toggleAll()">
+						<input type="checkbox" ng-model="ctrl.allExpanded">
 						Expand all
 					</label>
 				</div>
@@ -70,11 +70,11 @@
 
 				<ul class="file-tree">
 					<li class="folder" ng-repeat="d in ctrl.fileStructure">
-						<span>
+						<a href="#" ng-click="ctrl.expand(d)">
 							<i class="glyphicon glyphicon-folder-close"></i>
 							<strong ng-bind="d.folder"></strong>
-						</span>
-						<ul ng-show="ctrl.expanded">
+						</a>
+						<ul ng-show="d.expanded">
 							<li class="file" ng-repeat="f in d.files">
 								<span ng-bind="f"></span>
 							</li>
