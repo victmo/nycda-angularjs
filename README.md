@@ -85,3 +85,94 @@ Only updates an `ng-bind` when the apps loads. In other words, removes the **wat
 
 More info: [Angular function components](https://docs.angularjs.org/api/ng/function)
 
+#Dependency injection
+
+````javascript
+.controller(
+	"name-of-controller",
+	function( $service1, $service2 ){}
+)
+````
+
+Sometimes there are problems when trying to **uglyfy** Angular code. In this cases we can use an alternative notation:
+
+````javascript
+.controller(
+	"name-of-controller", [
+		"$service1", 
+		"$service2", 
+		function($map-to-$service1, $map-to-service2)]){}
+	]
+)
+````
+
+*Some people call **services**: **providers***
+
+#Watching props
+
+This is considered a **bad practice** because it ads more stuff to the watch list, hence the digest cycle.
+
+- `$scope.$watch(prop, function(newVal, oldVal){})` Watches changes on primitive objects
+- `$scope.$watchCollection(prop, fn(o, n))` Watches changes on objects and arrays, one level down
+- `$scope.$watch(prop, fn(o, n), true)` Watches all changes on an object recursively.
+
+#Custom services
+
+These are Angular's types of services
+
+- Value
+- Constant
+- **Factory**: A way of creating objects or instances of things. The public of a Factory is the return statement.
+- **Service**: Don't have a return statement. The entire function is available to the controller. For example, this can also be used to manage a collection of factories.
+- Provider
+
+#Config `module.config(fn())`
+
+Get's calles between **Compilation** and **Runtime**.
+
+Config can **only** take *constants* as services, not *values*.
+
+Values and Constants are the same thing but for readability purposes only constants can be called by config().
+
+#Providers
+
+When injected into `config()`, you **always** have to append the word `Provider`.
+
+If your provider's name is `MyProv` then when injected you have to call it `MyProvProvider`.
+
+You have to assign a `$get` function, **always**.
+
+A **Provider** has two APIs. One for `config()` and another one for the rest of the methods.
+
+```javascript
+app.provider('UserPermissions', function(){
+	var self = this;
+	var permissions;
+	
+	// This API is only available to config()
+	self.setPermissions = function(p){
+		permissions = p;
+	}
+	
+	self.$get = function(){
+		return {
+			// This API is available to the rest of methods
+			getPermissions: function(){
+				return angular.copy(permissions);
+			}
+		}
+	}
+});
+
+app.config(function(UserPermissionsProvider){
+	var permissions = [7,5,5];
+	UserPermissionsProvider.setPermissions(permissions);
+})
+
+app.controller('someController', function(UserPermissions){
+	var self = this;
+	self.permissions = UserPermissions.getPermissions();
+})
+```
+
+
