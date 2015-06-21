@@ -175,4 +175,4 @@ app.controller('someController', function(UserPermissions){
 })
 ```
 
-
+#Deferred object
