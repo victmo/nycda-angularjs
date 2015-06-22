@@ -70,15 +70,27 @@
 
 				<h4 id="feedback" ng-bind="c.simon.feedback"></h4>
 				
-				<button ng-if="c.simon.gameOver" ng-click="c.simon.onStart()" class="btn btn-default">Start new game</button>
+				<div id="controls" ng-if="c.simon.gameOver">
+					<hr>
+					<label class="radio-inline"><input ng-model="c.speed" type="radio" value="1.00"> Normal</label>
+					<label class="checkbox-inline"><input ng-model="c.speed" type="radio" value="0.60"> Fast</label>
+					<label class="checkbox-inline"><input ng-model="c.speed" type="radio" value="0.2"> Super fast</label>
+					<br><br>
+					<button ng-click="c.simon.onStart(false, c.speed)" class="btn btn-default">Start Classic Simon</button>
+					<button ng-click="c.simon.onStart(true, c.speed)" class="btn btn-default">Start Crazy Simon</button>
+				</div>
 				
 			</div>
 			
 
 			<div class="col-xs-6">
 				<div id="sequence" ng-if="c.simon.level">
-					<h2>Level <span ng-bind="c.simon.level"></span></h2>
-					<h4 ng-bind="c.simon.userTurn ? 'Your sequence' : 'Simon sequence'"></h4>
+					<h2>
+						Level <span ng-bind="c.simon.level"></span>
+						<br>
+						<small><span ng-bind="c.simon.nonClassic ? 'Crazy' : 'Classic'"></span> mode</small>
+					</h2>
+					<h5 ng-bind="c.simon.userTurn ? 'Your sequence' : 'Simon sequence'"></h5>
 					<ul>
 						<li ng-repeat="color in c.simon.currentSequence track by $index">
 							<span ng-bind="color.name"></span>

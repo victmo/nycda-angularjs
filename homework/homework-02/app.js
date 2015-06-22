@@ -2,6 +2,7 @@
 
 	app.controller('SimonCtrl', function(Simon){
 		var self = this;
+		self.speed = 0.60;
 		self.simon = new Simon(
 			[
 				{name: 'Yellow', class: 'yellow'},
@@ -12,16 +13,16 @@
 				//,{name: 'Purple', class: 'purple'}
 				// You can add as many colors as you want...
 			], 
-			0.65, // animation speed in seconds
-			true // classic mode? If false the pattern will change every level
+			false, // non-classic mode? (default: false) If true the pattern will change every level
+			self.speed // animation speed in seconds (default: 1s)
 		);
 	});
 
 	app.factory('Simon', function(SimonColor, $timeout){
-		function Simon(colors, speed, classicMode){ // speed = animation seconds
+		function Simon(colors, nonClassicMode, speed){
 			var self = this;
 			var s  = speed || 1;
-			var classic = typeof(classicMode)==='undefined' ? true : classicMode;
+			self.nonClassic = !!nonClassicMode;
 			self.interactive = false;
 			self.gameOver = true;
 			self.colors = [];
@@ -58,10 +59,10 @@
 
 			function addColor(){
 				var randColorIndex,
-					start = 0;
-					len = self.machineSequence.length
+					len = self.machineSequence.length,
+					start = len
 				;
-				if(!classic) start = len; // if playing non-classic mode, we change the whole sequence
+				if(self.nonClassic) start = 0; // if playing non-classic mode, we change the whole sequence
 
 				for(var i=start; i<=len; i++){
 					randColorIndex = ~~(Math.random() * self.colors.length);
@@ -102,10 +103,10 @@
 				}
 			};
 
-			self.onStart = function(speed, classicMode) {
+			self.onStart = function(nonClassicMode, speed) {
 				// we can change the animation speed and game mode on new game
 				s  = speed || s;
-				classic = typeof(classicMode)==='undefined' ? true : classic;
+				self.nonClassic = typeof(nonClassicMode)==='undefined' ? self.nonClassic : nonClassicMode;
 				self.machineSequence = [];
 				self.currentSequence = [];
 				self.gameOver = false;
