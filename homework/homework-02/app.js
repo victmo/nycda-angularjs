@@ -12,8 +12,8 @@
 				//,{name: 'Purple', class: 'purple'}
 				// You can add as many colors as you want...
 			], 
-			0.7, // animation speed in seconds
-			false // classic mode? If false the pattern will change every level
+			0.65, // animation speed in seconds
+			true // classic mode? If false the pattern will change every level
 		);
 	});
 
