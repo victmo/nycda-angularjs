@@ -2,20 +2,26 @@
 
 	app.controller('SimonCtrl', function(Simon){
 		var self = this;
-		self.simon = new Simon([
-			{name: 'Yellow', class: 'yellow'},
-			{name: 'Red', class: 'red'},
-			{name: 'Green', class: 'green'},
-			{name: 'Blue', class: 'blue'}
-			//,{name: 'Orange', class: 'orange'}
-			//,{name: 'Purple', class: 'purple'}
-			// You can add as many colors as you want...
-		]);
+		self.simon = new Simon(
+			[
+				{name: 'Yellow', class: 'yellow'},
+				{name: 'Red', class: 'red'},
+				{name: 'Green', class: 'green'},
+				{name: 'Blue', class: 'blue'}
+				//,{name: 'Orange', class: 'orange'}
+				//,{name: 'Purple', class: 'purple'}
+				// You can add as many colors as you want...
+			], 
+			0.7, // animation speed in seconds
+			false // classic mode? If false the pattern will change every level
+		);
 	});
 
 	app.factory('Simon', function(SimonColor, $timeout){
-		function Simon(colors){
+		function Simon(colors, speed, classicMode){ // speed = animation seconds
 			var self = this;
+			var s  = speed || 1;
+			var classic = typeof(classicMode)==='undefined' ? true : classicMode;
 			self.interactive = false;
 			self.gameOver = true;
 			self.colors = [];
@@ -33,11 +39,11 @@
 					var color = self.machineSequence[i];
 					color.class.active = true;
 					self.currentSequence.push(color);
-					$timeout(function(){ color.class.active = false; }, 500);
+					$timeout(function(){ color.class.active = false; }, 500*s);
 					if(i+1 < self.machineSequence.length){
-						$timeout(function(){ showColor(i+1); }, 1000);
+						$timeout(function(){ showColor(i+1); }, 1000*s);
 					}else{
-						$timeout(function(){ setUserTurn(); }, 500);
+						$timeout(function(){ setUserTurn(); }, 500*s);
 					}
 				}
 				showColor(0);
@@ -51,9 +57,17 @@
 			}
 
 			function addColor(){
-				var r = ~~(Math.random() * self.colors.length);
-				self.machineSequence.push(self.colors[r]);
-				self.level = self.machineSequence.length;
+				var randColorIndex,
+					start = 0;
+					len = self.machineSequence.length
+				;
+				if(!classic) start = len; // if playing non-classic mode, we change the whole sequence
+
+				for(var i=start; i<=len; i++){
+					randColorIndex = ~~(Math.random() * self.colors.length);
+					self.machineSequence[i] = self.colors[randColorIndex];
+				}
+				self.level = len+1;
 			}
 			
 			self.onClick = function(color){
@@ -72,7 +86,7 @@
 				if(self.currentSequence.length == self.machineSequence.length){
 					self.feedback = "Well done!";
 					self.interactive = false;
-					$timeout(function(){ setSimonTurn(); }, 1500);
+					$timeout(function(){ setSimonTurn(); }, 1500*s);
 				}
 			};
 			
@@ -88,13 +102,16 @@
 				}
 			};
 
-			self.onStart = function(){
+			self.onStart = function(speed, classicMode) {
+				// we can change the animation speed and game mode on new game
+				s  = speed || s;
+				classic = typeof(classicMode)==='undefined' ? true : classic;
 				self.machineSequence = [];
 				self.currentSequence = [];
 				self.gameOver = false;
 				self.interactive = false;
 				self.feedback = "Let's begin";
-				$timeout(function(){ setSimonTurn(); }, 1000);
+				$timeout(function(){ setSimonTurn(); }, 1000*s);
 			};
 			return self;
 		}
