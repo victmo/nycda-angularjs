@@ -1,0 +1,9 @@
+
+<div class="container">
+	<h1>Contacts</h1>
+		
+	<div ng-repeat="contact in main.phonebook.contacts">
+		<div contact-card="contact" on-deleted="main.deleteContact(theContact)"></div>
+	</div>
+
+</div>

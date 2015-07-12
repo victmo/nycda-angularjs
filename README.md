@@ -2,11 +2,12 @@
 
 ## App bootstrapping
 
-````html
+```html
 <body ng-app="AppName">
-````
+```
 
 ##Directives
+
 Special attributes in your HTML that bind your elements somehow to Angular
 
 Example of directives:
@@ -17,42 +18,44 @@ Example of directives:
 - `ng-repeat`
 
 ##Binding `ng-bind`
+
 Double bracket way (lower performance because of string evaluation)
 
-````html
+```html
 <span>{{value}}</span>
-````
+```
 
 With directives:
 
-````html
+```html
 <span ng-bind="value"></span>
-````
+```
 
 ##Repeater (Iterator) `ng-repeat`
+
 Array (value only)
 
-````html
+```html
 <li ng-repeat="value in array">
 	<span ng-bind="value"></span>
 </li>
-````
+```
 
 Array (index and value)
 
-````html
+```html
 <li ng-repeat="(index, value) in array">
 	<span ng-bind="value.prop"></span>
 </li>
-````
+```
 
 Object (key and value)
 
-````html
+```html
 <li ng-repeat="(key, value) in object">
 	<span ng-bind="value.prop"></span>
 </li>
-````
+```
 
 Additional properties of a repeater
 
@@ -72,9 +75,9 @@ Additional properties of a repeater
 
 Only updates an `ng-bind` when the apps loads. In other words, removes the **watcher** from an element.
 
-````html
+```html
 <span ng-bind="::ctrl.value"></span>
-````
+```
 
 #Utility methods
 
@@ -87,16 +90,16 @@ More info: [Angular function components](https://docs.angularjs.org/api/ng/funct
 
 #Dependency injection
 
-````javascript
+```javascript
 .controller(
 	"name-of-controller",
 	function( $service1, $service2 ){}
 )
-````
+```
 
 Sometimes there are problems when trying to **uglyfy** Angular code. In this cases we can use an alternative notation:
 
-````javascript
+```javascript
 .controller(
 	"name-of-controller", [
 		"$service1", 
@@ -104,13 +107,13 @@ Sometimes there are problems when trying to **uglyfy** Angular code. In this cas
 		function($map-to-$service1, $map-to-service2)]){}
 	]
 )
-````
+```
 
 *Some people call **services**: **providers***
 
 #Watching props
 
-This is considered a **bad practice** because it ads more stuff to the watch list, hence the digest cycle.
+This is considered a **bad practice** because it adds more stuff to the watch list, hence the digest cycle.
 
 - `$scope.$watch(prop, function(newVal, oldVal){})` Watches changes on primitive objects
 - `$scope.$watchCollection(prop, fn(o, n))` Watches changes on objects and arrays, one level down
@@ -120,8 +123,8 @@ This is considered a **bad practice** because it ads more stuff to the watch lis
 
 These are Angular's types of services
 
-- Value
-- Constant
+- **Value** A global variable
+- **Constant** A global variable that can be accessed by `config()`
 - **Factory**: A way of creating objects or instances of things. The public of a Factory is the return statement.
 - **Service**: Don't have a return statement. The entire function is available to the controller. For example, this can also be used to manage a collection of factories.
 - Provider
@@ -175,4 +178,85 @@ app.controller('someController', function(UserPermissions){
 })
 ```
 
-#Deferred object
+
+#Custom Directives
+
+It's declare like a regular service and it has to return an object definition with these properties:
+
+- **template** - html to be inserted inside the directive element
+- **restrict** - how we want the directive to be used (default EA):
+	- **E** - Element name `<my-directive>`
+	- **A** - Attribute `<div my-directive></div>`
+	- **C** - Class `<div class="">`
+	- **M** - Comment `<!-- directive: my-directive -->`
+- **controller** - The controller we want to bind to the custom directive. **Only one controller gets created** and it controls all your directives.
+- **scope** - If not specified it inherits the parent's scope. You have access to the parent's scope, just like ng-repeat. *The best practice is to specify it to make it more granular (independent of parents)*. Default: `false` = inherence. If you define as scope, **a new controller gets created per directive**.
+	- **@** Raw text (no interpolation)
+	- **=** Reference (will process the value inside the attr, just like ng-bind).
+	- **&** A function that gets called every time **inside the directive's controller scope**
+- **link** - lorem
+- **oteher** - lorem
+- **oteher** - lorem
+
+To use different vars form attributes to controller:
+
+```js
+scope: {
+	localValue: '=externalValue'
+}
+
+// You can pass the name of the directive!
+scope: {
+	localValue: '=myDirective'
+}
+
+// <div my-directive="something">
+```
+
+
+Optional attributes
+
+```javascript
+scope: {
+	attr: '=?'
+}
+```
+
+
+
+
+#Gulp workflow
+
+Install **Node**, **npm**, **Gulp**, **Bower**, **Yeoman** and an **Angular Generator for Yeoman**
+
+```
+$ npm install --global yo
+$ npm install -g gulp
+$ npm install -g bower
+$ npm install -g generator-gulp-angular
+```
+
+Generate an Angular project with **Yeoman**.
+
+**Note:** Every time you start a new project, is a good idea to update your generator! `npm install -g generator-gulp-angular`.
+
+```
+$ mkdir project
+$ cd project
+$ yo gulp-angular ProjectName --skip-install
+```
+
+Once you have your project setup or you downloaded or cloned a project, use **Bower** and **npm** to initialize and download all required components.
+
+```
+$ bower install
+$ npm install
+```
+
+To test your site, test the built-in server
+
+```
+$ gulp serve
+```
+
+For more info go to: https://github.com/Swiip/generator-gulp-angular

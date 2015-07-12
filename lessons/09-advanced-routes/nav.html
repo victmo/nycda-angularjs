@@ -1,0 +1,16 @@
+	<div class="container" ng-controller="NavigationCtrl as c">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header"><a class="navbar-brand" href="#">UI.Router</a></div>
+				<div id="navbar">
+					<ul class="nav navbar-nav">
+						<li><a ng-href="#" ui-sref-active="active" ui-sref="{{c.routes.homeState.name}}">Home</a></li>
+						<li><a ng-href="#" ui-sref-active="active" ui-sref="{{c.routes.aboutUsState.name}}">About us</a></li>
+						<li><a ng-href="#" ui-sref-active="active" ui-sref="{{c.routes.aboutUsContentState.name}}">About us (content)</a></li>
+						<li><a ng-href="#" ui-sref-active="active" ui-sref="{{c.routes.contactUsState.name}}">Contact</a></li>
+						<li><a ng-href="#" ui-sref-active="active" ui-sref="{{c.routes.contactUsPresidentState.name}}">Contact (President)</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>

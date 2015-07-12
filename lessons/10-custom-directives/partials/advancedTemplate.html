@@ -1,0 +1,18 @@
+<h3 ng-bind="c.recipeName"></h3>
+
+<ul>
+	<li ng-repeat="ingredient in c.recipe">
+		<strong ng-bind="ingredient.name"></strong>:
+		<span ng-bind="ingredient.amount"></span>
+	</li>
+</ul>
+
+<div class="form-inline">
+	<div class="form-group">
+		<input type="text" ng-model="c.newIngredient.name" class="form-control" placeholder="Ingredient">
+	</div>
+	<div class="form-group">
+		<input type="text" ng-model="c.newIngredient.amount" class="form-control" placeholder="Amount">
+	</div>
+	<button ng-click="c.addIngredient()" class="btn btn-default">Add ingredient</button>
+</div>

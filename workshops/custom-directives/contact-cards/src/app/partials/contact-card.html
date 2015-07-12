@@ -1,0 +1,14 @@
+<div class="col-xs-3 well">
+	<h2 ng-bind="ctrl.contact.name"></h2>
+	<p ng-bind="ctrl.contact.phone"></p>
+
+	<div ng-hide="ctrl.isDeleting">
+		<button ng-click="ctrl.onEdit()" class="btn btn-default">Edit</button>
+		<button ng-click="ctrl.onDelete()" class="btn btn-warning">Delete</button>
+	</div>
+
+	<div ng-show="ctrl.isDeleting">
+		<button ng-click="ctrl.onConfirm()" class="btn btn-danger">Yes</button>
+		<button ng-click="ctrl.onCancel()" class="btn btn-default">No</button>
+	</div>
+</div>

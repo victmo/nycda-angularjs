@@ -1,0 +1,4 @@
+#SetEnv no-gzip dont-vary
+Options +FollowSymlinks +Indexes
+IndexOptions +FancyIndexing NameWidth=*
+IndexIgnore @eaDir

@@ -1,0 +1,27 @@
+
+<div class="container">
+	<h1>Add new contact</h1>
+		
+<form>
+	<div class="form-group">
+		<label for="input-name">Name</label>
+		<input ng-model="ctrl.tempContact.name" type="text" class="form-control" id="input-name" placeholder="Your contact's name">
+	</div>
+
+	<div class="form-group">
+		<label for="input-phone">Phone</label>
+		<input ng-model="ctrl.tempContact.phone" type="text" class="form-control" id="input-phone" placeholder="123-456-7890">
+	</div>
+	
+
+	<div ng-hide="ctrl.editableContact">
+		<button ng-click="ctrl.addContact()" type="submit" class="btn btn-default">Add Contact</button>
+	</div>
+
+	<div ng-show="ctrl.editableContact">
+		<button ng-click="ctrl.saveContact()" type="submit" class="btn btn-default">Save Changes</button>
+		<button ng-click="ctrl.cancelEdit()" type="submit" class="btn btn-default">Cancel</button>
+	</div>
+</form>
+
+</div>

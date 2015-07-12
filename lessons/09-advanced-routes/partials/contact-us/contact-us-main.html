@@ -1,0 +1,11 @@
+<div class="container">
+	<h1>Contact us</h1>
+	<p ng-bind="c.text"></p>
+
+	<ul>
+		<li><a ng-href="#" ui-sref="{{c.routes.contactUsCeoState.name}}">CEO</a></li>
+		<li><a ng-href="#" ui-sref="{{c.routes.contactUsPresidentState.name}}">President</a></li>
+	</ul>
+
+	<div ui-view></div>
+</div>
