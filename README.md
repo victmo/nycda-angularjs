@@ -259,4 +259,4 @@ To test your site, test the built-in server
 $ gulp serve
 ```
 
-For more info go to: https://github.com/Swiip/generator-gulp-angular
+For more info go to: https://github.com/Swiip/generator-gulp-angular  

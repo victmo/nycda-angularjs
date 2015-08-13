@@ -15,12 +15,10 @@
 	});
 
 
-
-
 	app.service('MapsApiService', function(MapsApiResource) {
 		var self = this;
 
-		self.getAddress = function(parameters, completionCallback) {
+		self.getAddresses = function(parameters, completionCallback) {
 			MapsApiResource.getAddresses(parameters)
 				.$promise.then(
 					function onSuccess(response) {
@@ -41,7 +39,7 @@
 		var self = this;
 
 		self.getFormattedAddresses = function(address, completionCallback) {
-			MapsApiService.getAddress(
+			MapsApiService.getAddresses(
 				{address: address}, // parameters
 				function(isValid, response) { // completionCallback
 					if (isValid) {
